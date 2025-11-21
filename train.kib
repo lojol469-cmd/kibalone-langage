@@ -1,0 +1,16 @@
+cellule RAGTrainer {
+    // Cellule d'entraînement RAG pour indexer des documents PDF
+    // Spécialisée dans la biologie des arbres et leur morphologie
+
+    // Configuration RAG
+    chunk_size: 512
+    chunk_overlap: 50
+    embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+    pdf_path: "data/pdfs/arbres_biology.pdf"
+    output_index: "rag/indexes/arbres_biology.index"
+    output_metadata: "rag/metadata/arbres_biology.json"
+
+    // Actions simples
+    action construire_index()
+    action tester_index()
+}

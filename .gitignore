@@ -1,0 +1,89 @@
+# Modèles LLM (trop volumineux pour Git)
+models/
+*.safetensors
+*.bin
+*.pth
+*.pkl
+*.h5
+
+# Données utilisateur
+data/pdfs/
+data/images/
+data/audio/
+data/video/
+
+# Index FAISS et embeddings
+rag/indexes/
+rag/embeddings/
+rag/cache/
+
+# Mémoires et logs
+memories/
+logs/
+*.log
+
+# Cache Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Cache système
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environnements virtuels
+.env
+.env.local
+.env.production
+
+# Fichiers temporaires
+*.tmp
+*.temp
+.cache/
+
+# Base de données
+*.db
+*.sqlite
+*.sqlite3
+
+# Secrets et clés
+secrets/
+*.key
+*.pem
+config.local.json
+
+# Build et distribution
+build/
+dist/
+*.egg-info/
+
+# Tests
+.coverage
+.pytest_cache/
+.tox/
+
+# Documentation générée
+docs/_build/
+docs/build/
+
+# Jupyter
+.ipynb_checkpoints

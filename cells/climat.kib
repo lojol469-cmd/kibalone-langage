@@ -1,0 +1,33 @@
+// Cellule Climat - Nano-IA pour la gestion du climat
+// Cette cellule surveille la température et l'humidité
+
+cellule Climat {
+    // Importation des IA
+    importe IA:climat.temperature
+    importe IA:vision.feuilles
+    importe IA:LLM.kibali-core
+
+    // États
+    saison: "été"
+
+    // Capteurs
+    temperature: IA:climat.temperature.lire()
+    humidite: IA:climat.humidite.lire()
+
+    // Prédiction IA
+    mouvement_feuilles: IA:vision.feuilles.predict()
+
+    // Cerveau
+    decision: cerveau:que dois-je faire avec cette température ?
+
+    // Mémoire
+    memoire: rag:cycle_climatique
+
+    // Action
+    action ajuste() {
+        cerveau:comment ajuster l'humidité ?
+    }
+
+    // Évolution
+    evolution: auto
+}

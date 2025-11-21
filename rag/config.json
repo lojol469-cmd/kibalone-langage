@@ -1,0 +1,23 @@
+{
+  "name": "Kibali RAG System",
+  "version": "1.0",
+  "description": "Système RAG pour les cellules nano-IA Kibali",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "vector_store": "faiss",
+  "chunk_size": 512,
+  "chunk_overlap": 50,
+  "similarity_threshold": 0.7,
+  "max_results": 5,
+  "supported_formats": ["txt", "md", "json", "pdf"],
+  "directories": {
+    "indexes": "./indexes",
+    "embeddings": "./embeddings",
+    "metadata": "./metadata",
+    "cache": "./cache"
+  },
+  "cell_integration": {
+    "memory_cells": true,
+    "tool_cells": true,
+    "evolution_tracking": true
+  }
+}

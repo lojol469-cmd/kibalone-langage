@@ -1,0 +1,47 @@
+cellule TemperatureIA {
+    // Nano IA agent spécialisé dans l'analyse et les réactions à la température
+    // Outil pour le cerveau principal (LLM)
+
+    importe IA:base_sensor
+
+    // Champs spécialisés
+    seuil_froid: 10
+    seuil_chaud: 30
+    unite: "celsius"
+    precision: 0.5
+    memoire: "temperature_data"
+
+    // Capteurs intégrés
+    capteur_temperature: actif
+    historique: []
+
+    // Actions spécialisées
+    action analyser_temperature(temp) {
+        reaction: evaluer_risques(temp)
+        reaction: suggerer_adaptation(temp)
+    }
+
+    action evaluer_risques(temp) {
+        // Évalue les risques liés à la température
+        si temp < seuil_froid {
+            return "risque_gel"
+        } sinon si temp > seuil_chaud {
+            return "risque_chaleur"
+        } sinon {
+            return "temperature_optimale"
+        }
+    }
+
+    action suggerer_adaptation(temp) {
+        // Suggère des adaptations comportementales
+        si temp < seuil_froid {
+            return "augmenter_activite_photosynthese"
+        } sinon si temp > seuil_chaud {
+            return "reduire_transpiration"
+        } sinon {
+            return "maintenir_rythme_normal"
+        }
+    }
+
+    evolution: auto
+}

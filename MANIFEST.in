@@ -1,0 +1,25 @@
+include README.md
+include README_RAG_3D.md
+include LICENSE
+include requirements.txt
+include install_kibali.sh
+include .gitignore
+
+# Include example cells
+recursive-include cells *.kib
+
+# Include configuration files
+include rag/config.json
+
+# Include launch scripts
+include launch.py
+
+# Exclude large files (models, data, etc.)
+exclude models/*
+exclude data/*
+exclude rag/indexes/*
+exclude rag/embeddings/*
+exclude memories/*
+exclude logs/*
+exclude __pycache__/*
+exclude *.pyc
