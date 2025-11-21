@@ -1,0 +1,139 @@
+// =========================================
+// 🌿 Écosystème KIBALI - Exemple d'Exécution
+// Agent Intelligent en Langage Natif
+// =========================================
+
+// Importation de l'agent principal
+importe cellule:agent_kibali
+
+// Définition d'un scénario d'exécution
+programme DemonstrationKibali {
+
+    // Initialisation de l'écosystème
+    action demarrer() {
+        ecrire("🚀 Démarrage de l'écosystème KIBALI...")
+
+        // Création des cellules de base
+        arbre: cellule.Arbre.nouveau("Chêne Millénaire")
+        climat: cellule.Climat.nouveau("Système Climatique")
+        ecureuil: cellule.Ecureuil.nouveau("Écureuil Agile")
+        fleur: cellule.Fleur.nouveau("Rose Sauvage")
+
+        // Initialisation de l'agent KIBALI
+        agent: cellule.AgentKibali.nouveau()
+
+        // Connexion des cellules à l'agent
+        agent.connecter_cellule(arbre)
+        agent.connecter_cellule(climat)
+        agent.connecter_cellule(ecureuil)
+        agent.connecter_cellule(fleur)
+
+        ecrire("✅ Écosystème initialisé avec succès!")
+    }
+
+    // Simulation d'un cycle complet
+    action cycle_ecosysteme() {
+        ecrire("🔄 Début du cycle d'écosystème...")
+
+        // Phase 1: Analyse par l'agent
+        agent.analyser_situation()
+        ecrire("📊 Analyse globale terminée")
+
+        // Phase 2: Interventions de l'agent
+        agent.cycle_orchestration()
+        ecrire("🎯 Interventions de l'agent appliquées")
+
+        // Phase 3: Réactions des cellules
+        arbre.reagir_climat(climat)
+        ecureuil.reagir_a(arbre)
+        fleur.reagir_a(climat)
+
+        ecrire("🦠 Toutes les cellules ont réagi")
+    }
+
+    // Scénario de stress environnemental
+    action scenario_canicule() {
+        ecrire("🌡️ Simulation d'une canicule...")
+
+        // Modification environnementale
+        climat.temperature_actuelle: 35
+        climat.vent: "faible"
+        climat.humidite: 30
+
+        // Déclenchement de l'urgence
+        agent.reagir_urgence("canicule")
+
+        // Observation des adaptations
+        cycle_ecosysteme()
+
+        ecrire("🔥 Canicule gérée par l'agent KIBALI")
+    }
+
+    // Scénario de sécheresse
+    action scenario_secheresse() {
+        ecrire("🏜️ Simulation d'une sécheresse...")
+
+        climat.humidite: 25
+        climat.temperature_actuelle: 32
+
+        agent.reagir_urgence("secheresse")
+        cycle_ecosysteme()
+
+        ecrire("💧 Sécheresse régulée par l'écosystème")
+    }
+
+    // Apprentissage et évolution
+    action evolution_systeme() {
+        ecrire("🧬 Phase d'évolution du système...")
+
+        agent.apprendre_experience()
+        agent.evoluer()
+
+        // Test des nouvelles capacités
+        cycle_ecosysteme()
+
+        ecrire("✨ Système évolué avec succès!")
+    }
+
+    // Rapport final
+    action rapport_final() {
+        ecrire("📊 RAPPORT FINAL DE L'ÉCOSYSTÈME KIBALI")
+        ecrire("=" * 50)
+
+        agent.generer_rapport_cycle()
+
+        statistiques: {
+            "cycles_executes": 5,
+            "urgences_geres": 2,
+            "evolutions": 1,
+            "statut_final": "optimal"
+        }
+
+        ecrire("Statistiques finales:")
+        ecrire(statistiques)
+
+        ecrire("🎉 Simulation terminée avec succès!")
+    }
+
+    // Programme principal
+    action executer() {
+        demarrer()
+
+        // Cycles normaux
+        cycle_ecosysteme()
+        cycle_ecosysteme()
+
+        // Scénarios de stress
+        scenario_canicule()
+        scenario_secheresse()
+
+        // Évolution
+        evolution_systeme()
+
+        // Finalisation
+        rapport_final()
+    }
+}
+
+// Point d'entrée du programme
+main: DemonstrationKibali.executer()

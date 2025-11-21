@@ -1,0 +1,31 @@
+{
+  "domaine": "arbres_biology",
+  "date_creation": "2025-11-21T20:51:56.556973",
+  "configuration": {
+    "chunk_size": 512,
+    "chunk_overlap": 50,
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2"
+  },
+  "statistiques": {
+    "documents_traitees": 1,
+    "chunks_crees": 1,
+    "temps_total": 0.0,
+    "erreurs": 0
+  },
+  "documents": [
+    {
+      "id": "doc_709276_PfxcIaRF",
+      "titre": "arbres_biology",
+      "chemin_fichier": "data\\pdfs\\arbres_biology.txt",
+      "type_fichier": "txt",
+      "taille_bytes": 1355,
+      "nombre_chunks": 1,
+      "date_indexation": "2025-11-21T20:51:56.556860",
+      "hash_contenu": "02c75232a5c6c90fe046fb6bfa4a1becfa4184b728e9cbc5e58dc2e6cece34bd",
+      "metadata": {
+        "domaine": "arbres_biology",
+        "date_creation": "2025-11-21T20:51:49.274394"
+      }
+    }
+  ]
+}

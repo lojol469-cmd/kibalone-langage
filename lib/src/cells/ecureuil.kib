@@ -1,0 +1,38 @@
+cellule Ecureuil {
+    // Importation des IA
+    importe IA:vision.feuilles
+    importe IA:LLM.kibali-core
+
+    // États
+    nom: "Écureuil Agile"
+    energie: 100
+    position: "sol"
+
+    // Capteurs
+    vision_arbres: IA:vision.feuilles.detecter_nourriture()
+
+    // Cerveau pour comportements
+    decision: cerveau:où trouver de la nourriture ?
+
+    // Mémoire des comportements animaux
+    memoire: rag:ecureuil_behavior
+
+    // Comportements
+    action chercher_nourriture() {
+        vision_arbres: IA:vision.feuilles.detecter_nourriture()
+        position: "arbre"
+        energie: energie - 10
+        cerveau:comment grimper efficacement ?
+    }
+
+    action se_reposer() {
+        position: "nid"
+        energie: energie + 20
+        cerveau:optimiser le repos
+    }
+
+    action chercher_dans(arbre_cellule) {
+        position: "arbre"
+        energie: energie - 5
+        decision: cerveau:comment trouver nourriture dans cet arbre ?
+    }

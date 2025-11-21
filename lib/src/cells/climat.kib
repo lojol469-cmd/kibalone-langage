@@ -1,0 +1,25 @@
+cellule Climat {
+    // Importation des IA (dépendances vivantes)
+    importe IA:climat.temperature
+
+    // États statiques
+    nom: "Climat Environnemental"
+    type: "capteur météo"
+
+    // Capteurs dynamiques
+    temperature_actuelle: IA:climat.temperature.lire()
+    humidite: 65  // pourcentage
+    vent: "léger"  // description
+
+    // Mémoire interne pour science du climat
+    memoire: rag:climat_science
+
+    // Comportement de mise à jour
+    action mettre_a_jour() {
+        temperature_actuelle: IA:climat.temperature.lire()
+        cerveau:analyser les changements climatiques
+    }
+
+    // Évolution automatique
+    evolution: auto
+}

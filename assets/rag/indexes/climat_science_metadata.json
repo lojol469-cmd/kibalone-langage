@@ -1,0 +1,14 @@
+[
+  {
+    "document": "data/pdfs/climat_science.pdf",
+    "chunk": "SCIENCE DU CLIMAT Le climat est l'état moyen des conditions météorologiques sur une longue période. Il diffère de la météo qui est à court terme. Les facteurs influençant le climat incluent : 1. LATITUDE La latitude détermine l'angle d'incidence des rayons solaires. Plus on s'approche des pôles, plus l'énergie solaire est diluée. 2. ALTITUDE L'altitude affecte la température. Pour chaque 1000m d'altitude, la température diminue d'environ 6.5°C. 3. PROXIMITÉ DES OCÉANS Les océans modèrent les températures. Les climats côtiers sont plus tempérés. 4. COURANTS OCÉANIQUES Les courants chauds et froids transportent la chaleur autour du globe. 5. RELIEF Les montagnes créent des barrières qui affectent les précipitations (pluies sur le versant au vent). Les principaux types de climats sont : - Equatorial : chaud et humide toute l'année - Tropical : saisons sèches et humides - Tempéré : quatre saisons distinctes - Continental : étés chauds, hivers froids - Polaire : très froid, peu de précipitations - Désertique : très sec, variations diurnes extrêmes Le changement climatique actuel est principalement causé par les émissions de gaz à effet de serre dues aux activités humaines.",
+    "chunk_id": 0,
+    "timestamp": "2025-11-21"
+  },
+  {
+    "document": "data/pdfs/climat_science.pdf",
+    "chunk": "PRÉVISIONS MÉTÉOROLOGIQUES Les prévisions météorologiques utilisent des modèles mathématiques complexes qui intègrent : - Données satellites - Stations météorologiques au sol - Ballons sondes - Radars météorologiques - Modèles de circulation générale Les prévisions à court terme (1-3 jours) sont très fiables (>90%). Les prévisions à moyen terme (4-10 jours) sont bonnes (70-80%). Les prévisions saisonnières sont moins précises mais utiles pour la planification. Les phénomènes météorologiques extrêmes incluent ouragans, tornades, inondations, sécheresses, vagues de chaleur et de froid.",
+    "chunk_id": 1,
+    "timestamp": "2025-11-21"
+  }
+]

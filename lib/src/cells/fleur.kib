@@ -1,0 +1,43 @@
+cellule Fleur {
+    // Importation des IA
+    importe IA:vision.feuilles
+    importe IA:climat.temperature
+    importe IA:LLM.kibali-core
+
+    // États
+    couleur: "rouge"
+    age: 3
+    etat: "floraison"
+
+    // Capteurs
+    temperature: IA:climat.temperature.lire()
+    mouvement_petales: IA:vision.feuilles.predict()
+
+    // Cerveau
+    reaction: cerveau:comment fleurir selon la saison ?
+
+    // Mémoire
+    memoire: rag:fleur_biology
+
+    // Comportements
+    action fleurir() {
+        etat: "floraison"
+        mouvement_petales: IA:vision.feuilles.predict()
+        cerveau:optimiser la pollinisation
+    }
+
+    action se_faner() {
+        etat: "fanée"
+        couleur: "brun"
+        cerveau:préparer les graines
+    }
+
+    action adapter_a(climat_cellule) {
+        temperature: climat_cellule.temperature_actuelle
+        reaction: cerveau:comment adapter ma floraison à cette température ?
+    }
+
+    action adapter_climat() {
+        mouvement_petales: IA:vision.feuilles.predict()
+        cerveau:optimiser selon le climat actuel
+    }
