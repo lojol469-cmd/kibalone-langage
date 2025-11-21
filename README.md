@@ -82,3 +82,7 @@ tail -f logs/evolution.log
 
 [📖 Documentation Complète](README_RAG_3D.md) • [🐛 Signaler un Bug](https://github.com/lojol469-cmd/kibalone-langage/issues) • [💡 Proposer une Feature](https://github.com/lojol469-cmd/kibalone-langage/issues)</content>
 <parameter name="filePath">/home/belikan/kibali_project/README.md
+=======
+# kibalone-langage
+langage de programmation des IA nano 
+>>>>>>> f7505d9d0e9a7dc90d87701cca12b0df14b255b3
