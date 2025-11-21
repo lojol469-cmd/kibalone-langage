@@ -1,86 +1,189 @@
-# 🌱 Kibali - Écosystème de Nano-IA Vivantes
+# 🧬 Kibali Framework - Langage Organique Multi-Plateforme
 
-**Langage organique pour nano-IA autonomes avec cerveau LLM et base de connaissances RAG**
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/lojol469-cmd/kibalone-langage)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.8+-orange.svg)](https://www.python.org/)
+**Kibali** est un framework révolutionnaire pour créer des applications organiques vivantes qui s'adaptent et évoluent comme des êtres vivants. Inspiré par Flutter, Kibali permet de compiler des cellules IA vers Android, iOS, Web et Desktop avec une seule commande.
 
-## 🚀 Démarrage Rapide
+## ✨ Fonctionnalités
 
+- 🚀 **Comme Flutter** : `kibali run` détecte automatiquement la plateforme
+- 📱 **Multi-plateforme** : Android, iOS, Web, Desktop
+- 🧠 **IA Intégrée** : Runtime avec LLM (Phi-1.5) et RAG
+- 🌱 **Évolution Organique** : Les cellules apprennent et s'adaptent
+- 🎯 **Syntaxe Naturelle** : Langage déclaratif inspiré de la biologie
+
+## 📦 Installation Rapide
+
+### Linux/macOS
 ```bash
-# Installation
+curl -fsSL https://raw.githubusercontent.com/lojol469-cmd/kibalone-langage/main/install.sh | bash
+```
+
+### Windows
+Téléchargez et exécutez `install_windows.bat` depuis le repository.
+
+### Manuellement
+```bash
 git clone https://github.com/lojol469-cmd/kibalone-langage.git
 cd kibalone-langage
-./install_kibali.sh
-source ~/.bashrc
-
-# 📥 Télécharger un modèle LLM (obligatoire)
-python -c "from transformers import AutoModelForCausalLM, AutoTokenizer; AutoTokenizer.from_pretrained('microsoft/phi-1_5', cache_dir='models/phi-1_5'); AutoModelForCausalLM.from_pretrained('microsoft/phi-1_5', cache_dir='models/phi-1_5')"
-
-# Premier programme
-kibali run cells/arbre.kib
-
-# Interface 3D
-kibali launch .
-# Ouvrir http://localhost:8080
+pip install -r requirements.txt
 ```
 
-## 📖 Documentation Complète
+## 🚀 Utilisation
 
-Voir [README_RAG_3D.md](README_RAG_3D.md) pour la documentation complète incluant :
-- 🧠 Guide d'entraînement des nano-IA
-- 💻 Tutoriel de codage des cellules
-- 🔤 Référence complète du langage Kibali
-- 🎮 Manuel de l'interface 3D
-- 🔧 Guide de développement
-
-## 🌟 Fonctionnalités Clés
-
-- 🤖 **Cerveau LLM autonome** (Phi-1.5) pour décisions intelligentes
-- 📚 **Base de connaissances RAG** avec FAISS pour recherche sémantique
-- 🧬 **Évolution automatique** des cellules basée sur l'expérience
-- 🎮 **Interface 3D immersive** pour exploration visuelle
-- 🌐 **Écosystème vivant** de nano-IA communicantes
-
-## 🏗️ Architecture
-
-```
-Cellules .kib → Runtime Kibali → Cerveau Phi-1.5 ↔ Base RAG FAISS
-      ↓              ↓              ↓              ↓
-   Organiques   Autonome      Intelligent    Vectorielle
-```
-
-## 📚 Exemple d'Utilisation
-
+### Créer une cellule
 ```kibali
-// Créer une cellule intelligente
-cellule ArbreIntelligent {
+cellule Arbre {
+    // Nano-IA pour la gestion des arbres
     couleur: "vert"
     age: 3
-    memoire: "biologie_arbres"
+    temperature: 25
 
     action pousser()
     action adapter_temperature()
     action surveiller_sante()
 
-    evolution: auto  // Évolution autonome !
+    evolution: auto
 }
 ```
 
+### Compiler comme Flutter
 ```bash
-# Exécuter
+# Détection automatique de plateforme
 kibali run cells/arbre.kib
 
-# Observer l'évolution
-tail -f logs/evolution.log
+# Compilation explicite
+kibali compile cells/arbre.kib android
+kibali compile cells/arbre.kib ios
+kibali compile cells/arbre.kib web
+kibali compile cells/arbre.kib desktop
 ```
+
+## 📱 Plateformes Supportées
+
+| Plateforme | Framework | Commande de Build |
+|------------|-----------|-------------------|
+| **Android** | Kivy + Buildozer | `buildozer android debug` |
+| **iOS** | Toga + Briefcase | `briefcase build ios` |
+| **Web** | Transcrypt | `transcrypt -b -m -n main.py` |
+| **Desktop** | PyInstaller | `pyinstaller app.spec` |
+
+## 🧬 Architecture
+
+### Cellules (.kib)
+Les programmes Kibali sont des **cellules** qui définissent :
+- **Champs** : État statique (propriétés)
+- **Actions** : Comportements dynamiques
+- **Imports** : Dépendances IA
+- **Évolution** : Capacité d'apprentissage
+
+### Runtime IA
+Chaque application compilée inclut :
+- **Cerveau LLM** : Phi-1.5 pour décisions intelligentes
+- **Mémoire RAG** : Base de connaissances vectorielle
+- **Évolution** : Apprentissage continu
+- **Autonomie** : Décisions indépendantes
+
+## 📚 Exemples
+
+### Cellule Simple
+```kibali
+cellule TemperatureIA {
+    seuil: 25
+    unite: "celsius"
+
+    action mesurer()
+    action alerter()
+
+    evolution: auto
+}
+```
+
+### Cellule Avancée
+```kibali
+cellule ArbreIntelligent {
+    importe IA:vision.feuilles
+    importe IA:climat.temperature
+
+    couleur: "vert"
+    age: 5
+    sante: 95
+
+    memoire: "arbres_biology"
+
+    action pousser()
+    action photosynthese()
+    action adapter_climat()
+    action communiquer()
+
+    evolution: auto
+}
+```
+
+## 🛠️ Développement
+
+### Prérequis
+- Python 3.8+
+- Git
+- Dépendances système (build tools)
+
+### Installation Développeur
+```bash
+git clone https://github.com/lojol469-cmd/kibalone-langage.git
+cd kibalone-langage
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### Tests
+```bash
+# Test de compilation
+python kibali.py compile cells/arbre.kib android
+
+# Test d'exécution
+python kibali.py cells/arbre.kib
+
+# Script de démonstration
+./demo_kibali.sh
+```
+
+## 📖 Documentation
+
+- [Guide de Démarrage](docs/getting_started.md)
+- [Référence API](docs/api_reference.md)
+- [Exemples](examples/)
+- [Architecture](docs/architecture.md)
+
+## 🤝 Contribution
+
+1. Fork le projet
+2. Créez une branche (`git checkout -b feature/AmazingFeature`)
+3. Committez (`git commit -m 'Add some AmazingFeature'`)
+4. Pushez (`git push origin feature/AmazingFeature`)
+5. Ouvrez une Pull Request
+
+## 📄 Licence
+
+Distribué sous licence MIT. Voir `LICENSE` pour plus d'informations.
+
+## 🙏 Remerciements
+
+- **Flutter** pour l'inspiration multi-plateforme
+- **Microsoft** pour le modèle Phi-1.5
+- **Hugging Face** pour les transformers
+- **Meta** pour PyTorch
+
+## 🌟 Communauté
+
+- 📧 **Email** : team@kibali.org
+- 💬 **Discord** : [Rejoignez-nous](https://discord.gg/kibali)
+- 🐛 **Issues** : [GitHub Issues](https://github.com/lojol469-cmd/kibalone-langage/issues)
 
 ---
 
-**🌱 Avec Kibali, créez des IA qui vivent, apprennent et évoluent comme des organismes biologiques !**
-
-[📖 Documentation Complète](README_RAG_3D.md) • [🐛 Signaler un Bug](https://github.com/lojol469-cmd/kibalone-langage/issues) • [💡 Proposer une Feature](https://github.com/lojol469-cmd/kibalone-langage/issues)</content>
+**Kibali** - Où le code devient vivant 🧬✨</content>
 <parameter name="filePath">/home/belikan/kibali_project/README.md
 =======
 # kibalone-langage
