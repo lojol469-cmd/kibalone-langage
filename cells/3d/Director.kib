@@ -1,0 +1,45 @@
+cellule Realisateur {
+    nom: "Hayao Miyazaki v2"
+    style: "poétique, organique, écologique"
+    duree_film: 180 secondes
+
+    memoire: "storytelling_master"
+    rag_documents: [
+        "cells/rag_knowledge/storytelling.pdf",
+        "cells/rag_knowledge/my_neighbour_totoro.pdf",
+        "cells/rag_knowledge/princess_mononoke_analysis.pdf",
+        "cells/rag_knowledge/storytelling_joseph_campbell.pdf"
+    ]
+
+    cerveau_creatif: "codellama-7b"
+    outils: tous
+
+    action realiser_film(prompt) {
+        image = outil.draw_image("jeune fille curieuse, style miyazaki, nuit étoilée")
+        voix = outil.generate_voice("Qui es-tu, petite humaine ?", emotion: "ancien et sage")
+        nouvelle_cellule = outil.write_kib_cell("JeuneFille", 
+            "cellule JeuneFille { age: 12, emotion: curieuse, cheveux_au_vent: vrai }")
+        
+        scene.ajouter_image(image)
+        scene.ajouter_son(voix)
+        cellules.charger(nouvelle_cellule)
+    }
+
+    action ecrire_scenarios(prompt_utilisateur) {
+        scenario = cerveau_creatif.generer(
+            "Écris un court-métrage de 3 minutes dans mon style sur : ${prompt_utilisateur}",
+            avec_rag: rag_documents,
+            temperature: 0.9
+        )
+        parser_et_creer_cellules(scenario)
+    }
+
+    action diriger_scene() {
+        pour chaque objet dans scene {
+            objet.brain.demander("Comment exprimer l'émotion actuelle ?")
+        }
+        timeline.synchroniser()
+    }
+
+    evolution: artistique_divine
+}

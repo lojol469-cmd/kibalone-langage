@@ -1,0 +1,31 @@
+cellule Animation {
+    nom: "Animation"
+    role: "Maître de l'animation organique"
+    connaissances: [
+        "cells/rag_knowledge/animation_principles.pdf"
+    ]
+
+    cerveau: cerveau_principal
+    outils: ["render_frame"]
+
+    action animer_scene(scene_data) {
+        // Utilise les principes d'animation pour créer des mouvements organiques
+        principes = cerveau.demander("principes d'animation pour scène: " + scene_data)
+
+        // Génère l'animation avec les outils
+        if (outils.disponible("render_frame")) {
+            frame = outils.render_frame(scene_data)
+            scene.ajouter_frame(frame)
+        }
+
+        return "Animation appliquée: " + principes
+    }
+
+    action mouvement_organique(objet, emotion) {
+        // Crée des mouvements basés sur les émotions
+        mouvement = cerveau.demander("mouvement " + emotion + " pour " + objet)
+
+        appliquer_mouvement(objet, mouvement)
+        return mouvement
+    }
+}

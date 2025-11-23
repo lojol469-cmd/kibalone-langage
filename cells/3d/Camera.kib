@@ -1,0 +1,45 @@
+cellule Camera {
+    nom: "Main Camera"
+    position: [0, 5, 15]
+    cible: [0, 0, 0]
+    fov: 45
+    mouvement_actuel: "dolly_zoom"
+
+    // Chaque caméra a sa propre base de connaissances cinéma
+    memoire: "cinematography_rag"
+    rag_documents: [
+        "cells/rag_knowledge/cinematography.pdf",
+        "cells/rag_knowledge/alfred_hitchcock_techniques.pdf",
+        "cells/rag_knowledge/camera_movements.pdf"
+    ]
+
+    cerveau_principal: "phi-1_5"      // rapide pour bouger en temps réel
+    cerveau_creatif: "codellama-7b"   // lent mais génial pour inventer des plans
+    outils: ["render_frame"]
+
+    action choisir_plan(style, emotion) {
+        connaissance = cerveau_creatif.demander(
+            "Quel est le meilleur mouvement de caméra pour exprimer ${emotion} dans un film ${style} ?"
+            avec_contexte: rag_documents
+        )
+        appliquer_plan(connaissance.plan_suggere)
+    }
+
+    action suivre_sujet(sujet) {
+        cible = sujet.position + sujet.regard_direction * 2
+        position = interpoler_bezier(position_actuelle, cible + [0,3,10], 2.0s)
+    }
+
+    action rendre_scene() {
+        scene_state = {
+            camera: position,
+            cible: cible,
+            fov: fov,
+            objets: scene.objets
+        }
+        frame = outil.render_frame(scene_state)
+        return frame
+    }
+
+    evolution: cinematographique_professionnelle
+}

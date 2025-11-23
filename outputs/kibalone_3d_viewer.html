@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kibalone 3D Animation Engine</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+        }
+        #container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #ui {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            max-width: 300px;
+            z-index: 100;
+        }
+        #ui h3 {
+            margin: 0 0 10px 0;
+            color: #00ff88;
+        }
+        .status {
+            margin: 5px 0;
+        }
+        .loading {
+            color: #ffff00;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.5; }
+        }
+        .success {
+            color: #00ff88;
+        }
+        .error {
+            color: #ff4444;
+        }
+    </style>
+</head>
+<body>
+    <div id="ui">
+        <h3>🧬 Kibalone 3D Engine</h3>
+        <div id="status" class="status loading">Initialisation...</div>
+        <div id="scene-info" class="status">Scène: Chargement</div>
+        <div id="cells-count" class="status">Cellules: 0</div>
+        <div id="fps" class="status">FPS: 0</div>
+    </div>
+
+    <div id="container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Kibalone 3D Animation Engine - Phase 2
+        class Kibalone3DEngine {
+            constructor() {
+                this.scene = null;
+                this.camera = null;
+                this.renderer = null;
+                this.cells = [];
+                this.clock = new THREE.Clock();
+                this.fps = 0;
+                this.frameCount = 0;
+                this.lastTime = performance.now();
+
+                this.init();
+                this.createScene();
+                this.animate();
+            }
+
+            init() {
+                // Initialiser Three.js
+                this.scene = new THREE.Scene();
+                this.scene.background = new THREE.Color(0x000011);
+
+                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                this.camera.position.set(0, 5, 10);
+
+                this.renderer = new THREE.WebGLRenderer({ antialias: true });
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.shadowMap.enabled = true;
+                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+                document.getElementById('container').appendChild(this.renderer.domElement);
+
+                // Gestion du redimensionnement
+                window.addEventListener('resize', () => {
+                    this.camera.aspect = window.innerWidth / window.innerHeight;
+                    this.camera.updateProjectionMatrix();
+                    this.renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+
+                this.updateStatus('success', 'Three.js initialisé');
+            }
+
+            createScene() {
+                // Créer l'environnement de base
+                this.createGround();
+                this.createLighting();
+                this.createSkybox();
+
+                // Créer les cellules 3D de base
+                this.createTreeCell();
+                this.createCharacterCell();
+                this.createCameraCell();
+
+                this.updateStatus('success', 'Scène créée avec cellules 3D');
+            }
+
+            createGround() {
+                // Sol de la forêt
+                const groundGeometry = new THREE.PlaneGeometry(100, 100);
+                const groundMaterial = new THREE.MeshLambertMaterial({
+                    color: 0x2d5016,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+                ground.rotation.x = -Math.PI / 2;
+                ground.receiveShadow = true;
+                this.scene.add(ground);
+
+                // Ajouter de l'herbe procédurale
+                for (let i = 0; i < 200; i++) {
+                    const grassGeometry = new THREE.CylinderGeometry(0.01, 0.02, 0.5, 3);
+                    const grassMaterial = new THREE.MeshLambertMaterial({ color: 0x228B22 });
+                    const grass = new THREE.Mesh(grassGeometry, grassMaterial);
+
+                    grass.position.set(
+                        (Math.random() - 0.5) * 80,
+                        0.25,
+                        (Math.random() - 0.5) * 80
+                    );
+                    grass.castShadow = true;
+                    this.scene.add(grass);
+                }
+            }
+
+            createLighting() {
+                // Lumière ambiante
+                const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
+                this.scene.add(ambientLight);
+
+                // Lumière directionnelle (soleil)
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(50, 50, 25);
+                directionalLight.castShadow = true;
+                directionalLight.shadow.mapSize.width = 2048;
+                directionalLight.shadow.mapSize.height = 2048;
+                this.scene.add(directionalLight);
+
+                // Lumière de la lune
+                const moonLight = new THREE.PointLight(0xaaaaff, 0.4, 100);
+                moonLight.position.set(-30, 30, -30);
+                this.scene.add(moonLight);
+            }
+
+            createSkybox() {
+                // Ciel étoilé
+                const skyGeometry = new THREE.SphereGeometry(500, 32, 32);
+                const skyMaterial = new THREE.MeshBasicMaterial({
+                    color: 0x000022,
+                    side: THREE.BackSide
+                });
+                const sky = new THREE.Mesh(skyGeometry, skyMaterial);
+                this.scene.add(sky);
+
+                // Ajouter des étoiles
+                for (let i = 0; i < 100; i++) {
+                    const starGeometry = new THREE.SphereGeometry(0.05, 4, 4);
+                    const starMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+                    const star = new THREE.Mesh(starGeometry, starMaterial);
+
+                    star.position.set(
+                        (Math.random() - 0.5) * 1000,
+                        (Math.random() - 0.5) * 1000,
+                        (Math.random() - 0.5) * 1000
+                    );
+                    this.scene.add(star);
+                }
+            }
+
+            createTreeCell() {
+                // Cellule Arbre organique
+                const treeGroup = new THREE.Group();
+
+                // Tronc
+                const trunkGeometry = new THREE.CylinderGeometry(0.3, 0.5, 4, 8);
+                const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+                const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+                trunk.position.y = 2;
+                trunk.castShadow = true;
+                treeGroup.add(trunk);
+
+                // Feuillage
+                const leavesGeometry = new THREE.SphereGeometry(2, 8, 6);
+                const leavesMaterial = new THREE.MeshLambertMaterial({ color: 0x228B22 });
+                const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
+                leaves.position.y = 4;
+                leaves.castShadow = true;
+                treeGroup.add(leaves);
+
+                treeGroup.position.set(5, 0, -5);
+                treeGroup.userData = {
+                    type: 'tree',
+                    brain: 'phi-1_5',
+                    windStrength: 0,
+                    growth: 1.0
+                };
+
+                this.cells.push(treeGroup);
+                this.scene.add(treeGroup);
+            }
+
+            createCharacterCell() {
+                // Cellule Personnage
+                const characterGroup = new THREE.Group();
+
+                // Corps
+                const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.3, 1.5, 8);
+                const bodyMaterial = new THREE.MeshLambertMaterial({ color: 0xffdbac });
+                const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+                body.position.y = 0.75;
+                characterGroup.add(body);
+
+                // Tête
+                const headGeometry = new THREE.SphereGeometry(0.3, 8, 8);
+                const headMaterial = new THREE.MeshLambertMaterial({ color: 0xffdbac });
+                const head = new THREE.Mesh(headGeometry, headMaterial);
+                head.position.y = 1.8;
+                characterGroup.add(head);
+
+                // Membres (simplifiés)
+                const armGeometry = new THREE.CylinderGeometry(0.1, 0.1, 1, 6);
+                const armMaterial = new THREE.MeshLambertMaterial({ color: 0xffdbac });
+
+                const leftArm = new THREE.Mesh(armGeometry, armMaterial);
+                leftArm.position.set(-0.6, 0.8, 0);
+                leftArm.rotation.z = Math.PI / 6;
+                characterGroup.add(leftArm);
+
+                const rightArm = new THREE.Mesh(armGeometry, armMaterial);
+                rightArm.position.set(0.6, 0.8, 0);
+                rightArm.rotation.z = -Math.PI / 6;
+                characterGroup.add(rightArm);
+
+                characterGroup.position.set(0, 0, 0);
+                characterGroup.userData = {
+                    type: 'character',
+                    brain: 'codellama-7b',
+                    emotion: 'curious',
+                    movement: 'walking',
+                    targetPosition: new THREE.Vector3(0, 0, 0)
+                };
+
+                this.cells.push(characterGroup);
+                this.scene.add(characterGroup);
+            }
+
+            createCameraCell() {
+                // Cellule Caméra intelligente
+                const cameraGroup = new THREE.Group();
+
+                // Représentation visuelle de la caméra
+                const cameraBodyGeometry = new THREE.BoxGeometry(0.5, 0.3, 0.8);
+                const cameraBodyMaterial = new THREE.MeshLambertMaterial({ color: 0x333333 });
+                const cameraBody = new THREE.Mesh(cameraBodyGeometry, cameraBodyMaterial);
+                cameraGroup.add(cameraBody);
+
+                // Objectif
+                const lensGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.2, 8);
+                const lensMaterial = new THREE.MeshLambertMaterial({ color: 0x111111 });
+                const lens = new THREE.Mesh(lensGeometry, lensMaterial);
+                lens.rotation.x = Math.PI / 2;
+                lens.position.z = 0.3;
+                cameraGroup.add(lens);
+
+                cameraGroup.position.set(0, 3, 8);
+                cameraGroup.userData = {
+                    type: 'camera',
+                    brain: 'phi-1_5',
+                    mode: 'follow',
+                    target: null,
+                    cinematicAngle: 0
+                };
+
+                this.cells.push(cameraGroup);
+                this.scene.add(cameraGroup);
+            }
+
+            animate() {
+                requestAnimationFrame(() => this.animate());
+
+                const deltaTime = this.clock.getDelta();
+
+                // Mettre à jour les cellules
+                this.updateCells(deltaTime);
+
+                // Calculer FPS
+                this.frameCount++;
+                const currentTime = performance.now();
+                if (currentTime - this.lastTime >= 1000) {
+                    this.fps = Math.round((this.frameCount * 1000) / (currentTime - this.lastTime));
+                    this.frameCount = 0;
+                    this.lastTime = currentTime;
+                    this.updateUI();
+                }
+
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            updateCells(deltaTime) {
+                this.cells.forEach(cell => {
+                    switch (cell.userData.type) {
+                        case 'tree':
+                            this.updateTreeCell(cell, deltaTime);
+                            break;
+                        case 'character':
+                            this.updateCharacterCell(cell, deltaTime);
+                            break;
+                        case 'camera':
+                            this.updateCameraCell(cell, deltaTime);
+                            break;
+                    }
+                });
+            }
+
+            updateTreeCell(tree, deltaTime) {
+                // Animation organique de l'arbre
+                const time = this.clock.getElapsedTime();
+                const windStrength = Math.sin(time * 0.5) * 0.1;
+
+                // Faire bouger les feuilles avec le vent
+                tree.children[1].rotation.x = windStrength;
+                tree.children[1].rotation.z = windStrength * 0.5;
+
+                // Croissance lente
+                tree.userData.growth += deltaTime * 0.001;
+                tree.scale.setScalar(1 + Math.sin(tree.userData.growth) * 0.05);
+            }
+
+            updateCharacterCell(character, deltaTime) {
+                // Animation de marche du personnage
+                const time = this.clock.getElapsedTime();
+
+                // Mouvement de balancement des bras
+                const armSwing = Math.sin(time * 8) * 0.3;
+                character.children[2].rotation.x = armSwing; // Bras gauche
+                character.children[3].rotation.x = -armSwing; // Bras droit
+
+                // Déplacement simple
+                character.position.x += Math.sin(time * 0.5) * deltaTime * 0.5;
+                character.position.z += Math.cos(time * 0.3) * deltaTime * 0.3;
+
+                // Rotation pour faire face à la direction
+                character.rotation.y = time * 0.2;
+            }
+
+            updateCameraCell(cameraCell, deltaTime) {
+                // Caméra intelligente qui suit le personnage
+                const character = this.cells.find(c => c.userData.type === 'character');
+                if (character) {
+                    const targetPosition = character.position.clone();
+                    targetPosition.y += 2; // Regarder au niveau de la tête
+
+                    // Lissage du mouvement de caméra
+                    cameraCell.position.lerp(targetPosition, deltaTime * 2);
+                    cameraCell.lookAt(character.position);
+
+                    // Ajuster la caméra principale pour suivre
+                    this.camera.position.copy(cameraCell.position);
+                    this.camera.lookAt(character.position);
+                }
+            }
+
+            updateStatus(status, message) {
+                const statusEl = document.getElementById('status');
+                statusEl.className = `status ${status}`;
+                statusEl.textContent = message;
+            }
+
+            updateUI() {
+                document.getElementById('cells-count').textContent = `Cellules: ${this.cells.length}`;
+                document.getElementById('fps').textContent = `FPS: ${this.fps}`;
+            }
+
+            // Méthode pour recevoir des commandes du backend Python
+            receiveCommand(command) {
+                console.log('Commande reçue:', command);
+
+                switch (command.type) {
+                    case 'animate':
+                        this.startAnimation(command.scenario);
+                        break;
+                    case 'add_cell':
+                        this.addDynamicCell(command.cellData);
+                        break;
+                    case 'update_emotion':
+                        this.updateCharacterEmotion(command.emotion);
+                        break;
+                }
+            }
+
+            startAnimation(scenario) {
+                console.log('Démarrage animation:', scenario);
+                this.updateStatus('success', `Animation: ${scenario.titre}`);
+                document.getElementById('scene-info').textContent = `Scène: ${scenario.titre}`;
+            }
+
+            addDynamicCell(cellData) {
+                console.log('Ajout cellule dynamique:', cellData);
+                // Implémentation pour ajouter des cellules dynamiquement
+            }
+
+            updateCharacterEmotion(emotion) {
+                const character = this.cells.find(c => c.userData.type === 'character');
+                if (character) {
+                    character.userData.emotion = emotion;
+                    console.log('Émotion mise à jour:', emotion);
+                }
+            }
+        }
+
+        // Initialiser le moteur 3D
+        let engine;
+        window.onload = () => {
+            engine = new Kibalone3DEngine();
+
+            // Simulation de réception de commandes du backend
+            setTimeout(() => {
+                engine.receiveCommand({
+                    type: 'animate',
+                    scenario: {
+                        titre: 'Forêt Mystérieuse',
+                        personnages: ['Renard Magique'],
+                        actions: [
+                            { temps: 0, action: 'Camera zoom' },
+                            { temps: 5, action: 'Personnage marche' },
+                            { temps: 10, action: 'Arbres bougent' }
+                        ]
+                    }
+                });
+            }, 2000);
+        };
+
+        // Interface pour communication avec Python
+        window.kibalone3D = {
+            receiveCommand: (command) => {
+                if (engine) {
+                    engine.receiveCommand(command);
+                }
+            }
+        };
+    </script>
+</body>
+</html>

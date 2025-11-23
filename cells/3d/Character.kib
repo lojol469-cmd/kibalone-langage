@@ -1,0 +1,42 @@
+cellule Character {
+    nom: "Protagoniste"
+    position: [0, 0, 0]
+    emotion_actuelle: "curiosité"
+    mouvement_actuel: "marcher"
+
+    memoire: "acting_experience"
+    rag_documents: [
+        "cells/rag_knowledge/acting_theory.pdf",
+        "cells/rag_knowledge/emotion_expressions.pdf",
+        "cells/rag_knowledge/character_animation.pdf"
+    ]
+
+    cerveau_principal: "phi-1_5"      // rapide pour les réactions temps réel
+    cerveau_creatif: "codellama-7b"   // pour développer la personnalité
+    outils: ["draw_image", "generate_voice", "create_3d_model"]
+
+    action exprimer_emotion(nouvelle_emotion) {
+        emotion_actuelle = nouvelle_emotion
+        animation = cerveau_principal.demander(
+            "Comment animer une expression de ${nouvelle_emotion} ?",
+            avec_contexte: rag_documents
+        )
+        appliquer_animation(animation)
+    }
+
+    action interagir_avec(objet) {
+        reaction = cerveau_creatif.demander(
+            "Comment réagir face à ${objet.nom} dans cette situation ?",
+            avec_rag: rag_documents,
+            temperature: 0.7
+        )
+        executer_reaction(reaction)
+    }
+
+    action creer_portrait() {
+        image = outil.draw_image("portrait de ${nom}, émotion: ${emotion_actuelle}, style réaliste")
+        return image
+    }
+
+    evolution: psychologique_humaine
+}

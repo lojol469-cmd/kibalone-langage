@@ -9,7 +9,6 @@ fonctionnement de l'écosystème KIBALI.
 # Exports du noyau
 from .core import AgentKibali, Ecosysteme, Cellule, Environnement
 from .ai import ModelManager, IntelligentAnalyzer, SystemeRAG, RAGTrainer
-from .cells import charger_cellule, lister_cellules
 from .shared import Config, get_logger
 
 __version__ = "1.0.0"
@@ -27,10 +26,6 @@ __all__ = [
     'IntelligentAnalyzer',
     'SystemeRAG',
     'RAGTrainer',
-
-    # Cells
-    'charger_cellule',
-    'lister_cellules',
 
     # Shared
     'Config',

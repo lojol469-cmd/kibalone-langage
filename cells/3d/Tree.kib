@@ -1,0 +1,44 @@
+cellule OrganicTree {
+    nom: "Arbre Ancien"
+    position: [10, 0, -5]
+    age: 500
+    etat_sante: "vigoureux"
+    saison_actuelle: "printemps"
+
+    memoire: "biology_knowledge"
+    rag_documents: [
+        "cells/rag_knowledge/tree_biology.pdf",
+        "cells/rag_knowledge/organic_animation.pdf",
+        "cells/rag_knowledge/ecosystem_dynamics.pdf"
+    ]
+
+    cerveau_principal: "phi-1_5"      // pour les mouvements organiques rapides
+    cerveau_creatif: "codellama-7b"   // pour l'évolution et l'adaptation
+    outils: ["generate_voice", "create_3d_model"]
+
+    action reagir_au_vent(force_vent) {
+        mouvement = cerveau_principal.demander(
+            "Comment un arbre de ${age} ans réagit à un vent de force ${force_vent} ?",
+            avec_contexte: rag_documents
+        )
+        animer_branches(mouvement)
+    }
+
+    action communiquer_avec_personnage(personnage) {
+        message = cerveau_creatif.generer(
+            "Que dirait un arbre millénaire à ${personnage.nom} qui approche ?",
+            avec_rag: rag_documents,
+            temperature: 0.8
+        )
+        voix = outil.generate_voice(message, emotion: "ancien", lang: "fr")
+        scene.ajouter_son(voix)
+        transmettre_message(message)
+    }
+
+    action creer_modele_3d() {
+        model = outil.create_3d_model("vieux chêne majestueux avec visage sage, ${age} ans")
+        return model
+    }
+
+    evolution: organique_naturelle
+}
