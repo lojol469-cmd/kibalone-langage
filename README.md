@@ -12,6 +12,7 @@
 - 🧠 **IA Intégrée** : Runtime avec LLM (Phi-1.5) et RAG
 - 🌱 **Évolution Organique** : Les cellules apprennent et s'adaptent
 - 🎯 **Syntaxe Naturelle** : Langage déclaratif inspiré de la biologie
+- 🔌 **Plugin Isol** : Gestion des dépendances IA sans conflits (Stable Diffusion, YOLO, etc.)
 
 ## 📦 Installation Rapide
 
